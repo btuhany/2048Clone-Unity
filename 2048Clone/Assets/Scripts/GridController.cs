@@ -49,4 +49,22 @@ public class GridController : MonoBehaviour
         }
         return true;
     }
+    public CellDataHandler GetCell(int x, int y)
+    {
+        return Rows[y].Cells[x];
+    }
+    public CellDataHandler GetCell(Vector2Int cellCoordinates)
+    {
+        if(cellCoordinates.x<0 || cellCoordinates.y<0 || cellCoordinates.x>=GridWidth || cellCoordinates.y>=GridHeight)
+            return null;
+        else
+            return Rows[cellCoordinates.y].Cells[cellCoordinates.x];
+    }
+    public CellDataHandler GetAdjacentCell(CellDataHandler cell, Vector2Int direction)
+    {
+        Vector2Int cellCoordinates = cell.Coordinates;
+        cellCoordinates.x += direction.x;
+        cellCoordinates.y -= direction.y; //Vector2.up = 0,1  ,, but in the coordinates increasing y means going to last row means down direction.
+        return GetCell(cellCoordinates);
+    }
 }
